@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class NewPasswordDto {
 
-    String currentPassword;
-    String newPassword;
+    private String currentPassword;
+    private String newPassword;
 }

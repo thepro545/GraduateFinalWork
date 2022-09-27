@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ResponseWrapper <T>{
 
-    int count;
-    T results;
+    private int count;
+    private T results;
 }
