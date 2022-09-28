@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import ru.skypro.homework.dto.Role;
@@ -22,11 +23,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user){
+    public User createUser(User user) {
 
         User createUser = userRepository.findById(user.getId()).orElse(user);
 
-        if(createUser.getRole() == null){
+        if (createUser.getRole() == null) {
             createUser.setRole(USER.name());
         }
 
@@ -51,7 +52,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Named("getUserById")
     public User getUserById(long id) {
-        return userRepository.findById(id).orElseThrow(() ->new NotFoundException("Пользователь с id " + id + " не найден!"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден!"));
     }
 }

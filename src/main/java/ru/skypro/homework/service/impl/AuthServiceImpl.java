@@ -21,7 +21,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
 
-
     public AuthServiceImpl(UserDetailsManager manager, UserRepository userRepository) {
         this.manager = manager;
         this.userRepository = userRepository;

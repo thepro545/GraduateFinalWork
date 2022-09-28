@@ -1,10 +1,12 @@
 package ru.skypro.homework.controller;
 
 
+import liquibase.pro.packaged.T;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.CreateUserDto;
 import ru.skypro.homework.dto.NewPasswordDto;
+import ru.skypro.homework.dto.ResponseWrapper;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.UserMapper;
@@ -27,21 +29,21 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> addUser(@RequestBody CreateUserDto createUserDto) {
+    public ResponseEntity<CreateUserDto> addUser(@RequestBody CreateUserDto createUserDto) {
 
         User user = userService.createUser(mapper.createUserDtoToEntity(createUserDto));
 
-        return ResponseEntity.ok(mapper.toDto(user));
+        return ResponseEntity.ok(mapper.toCreateUserDto(user));
 
     }
 
 
     @GetMapping("/me")
-    public ResponseEntity<Collection<UserDto>> getUsers() {
+    public ResponseWrapper<UserDto> getUsers() {
 
         Collection<User> users = userService.getUsers();
 
-        return ResponseEntity.ok(mapper.toDto(users));
+        return ResponseWrapper.of(mapper.toDto(users));
 
     }
 
@@ -53,7 +55,7 @@ public class UserController {
 
 
 //    @PostMapping("/set_password")
-//    public boolean setPassword(@RequestBody NewPasswordDto newPasswordDto) {
+//    public NewPasswordDto setPassword(@RequestBody NewPasswordDto newPasswordDto) {
 //
 //    }
 
