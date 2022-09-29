@@ -1,6 +1,8 @@
 package ru.skypro.homework.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import liquibase.pro.packaged.T;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.util.Collection;
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Пользователи", description = "UserController")
 public class UserController {
 
     private final UserService userService;
@@ -28,24 +31,26 @@ public class UserController {
         this.mapper = mapper;
     }
 
+    @Operation(summary = "addUser", description = "addUser")
     @PostMapping
     public ResponseEntity<CreateUserDto> addUser(@RequestBody CreateUserDto createUserDto) {
 
         User user = userService.createUser(mapper.createUserDtoToEntity(createUserDto));
 
         return ResponseEntity.ok(mapper.toCreateUserDto(user));
-
     }
 
 
+    @Operation(summary = "getUsers", description = "getUsers")
     @GetMapping("/me")
     public ResponseWrapper<UserDto> getUsers() {
 
         Collection<User> users = userService.getUsers();
 
         return ResponseWrapper.of(mapper.toDto(users));
-
     }
+
+    @Operation(summary = "updateUser", description = "updateUser")
 
     @PatchMapping("/me")
     public UserDto update(@RequestBody UserDto userDto) {
@@ -53,20 +58,18 @@ public class UserController {
         return mapper.toDto(userService.update(user));
     }
 
-
+//    @Operation(summary = "setPassword", description = "setPassword")
 //    @PostMapping("/set_password")
 //    public NewPasswordDto setPassword(@RequestBody NewPasswordDto newPasswordDto) {
 //
 //    }
 
+    @Operation(summary = "getUser", description = "getUser")
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable long id) {
 
         User user = userService.getUserById(id);
 
         return ResponseEntity.ok(mapper.toDto(user));
-
     }
-
-
 }

@@ -8,10 +8,8 @@ import ru.skypro.homework.entity.User;
 @Mapper
 public interface UserMapperToRegReq {
 
-
     @Mapping(source = "email", target = "username")
     RegisterReqDto toDto(User entity);
-
 
     @Mapping(source = "username", target = "email")
     User toEntity(RegisterReqDto dto);

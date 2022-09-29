@@ -51,12 +51,10 @@ public class AuthServiceImpl implements AuthService {
                         .build()
         );
 
-
 //        registerReq.setFirstName(registerReq.getFirstName());
 //        registerReq.setLastName(registerReq.getLastName());
 //        registerReq.setPhone(registerReq.getPhone());
 //        registerReq.setRole(role);
-//
 //        userRepository.save(userMapper.toEntity(registerReq));
 
         return true;

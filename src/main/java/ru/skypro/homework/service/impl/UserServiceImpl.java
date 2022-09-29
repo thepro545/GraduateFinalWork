@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.save(createUser);
-
     }
 
     @Override
@@ -52,7 +51,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Named("getUserById")
     public User getUserById(long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден!"));
     }

@@ -18,7 +18,6 @@ import java.util.List;
 @Mapper
 public interface AdsMapper extends WebMapper<AdsDto, Ads> {
 
-
     @Override
     @Mapping(target = "author.id", source = "author")
     @Mapping(target = "id", source = "pk")
@@ -35,7 +34,6 @@ public interface AdsMapper extends WebMapper<AdsDto, Ads> {
 
     @Mapping(target = "pk", source = "id")
     CreateAdsDto createAdsToDto(Ads entity);
-
 
     @Mapping(target = "authorFirstName", source = "author.firstName")
     @Mapping(target = "authorLastName", source = "author.lastName")
