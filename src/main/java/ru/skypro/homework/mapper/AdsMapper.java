@@ -39,6 +39,7 @@ public interface AdsMapper extends WebMapper<AdsDto, Ads> {
     @Mapping(target = "authorLastName", source = "author.lastName")
     @Mapping(target = "phone", source = "author.phone")
     @Mapping(target = "email", source = "author.email")
+    @Mapping(target = "pk", source = "id")
     FullAdsDto toFullAdsDto(Ads entity);
 
 }

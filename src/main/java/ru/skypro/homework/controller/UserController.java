@@ -4,8 +4,11 @@ package ru.skypro.homework.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import liquibase.pro.packaged.T;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 import ru.skypro.homework.dto.CreateUserDto;
 import ru.skypro.homework.dto.NewPasswordDto;
 import ru.skypro.homework.dto.ResponseWrapper;
@@ -51,18 +54,23 @@ public class UserController {
     }
 
     @Operation(summary = "updateUser", description = "updateUser")
-
     @PatchMapping("/me")
     public UserDto update(@RequestBody UserDto userDto) {
         User user = mapper.toEntity(userDto);
         return mapper.toDto(userService.update(user));
     }
 
-//    @Operation(summary = "setPassword", description = "setPassword")
-//    @PostMapping("/set_password")
-//    public NewPasswordDto setPassword(@RequestBody NewPasswordDto newPasswordDto) {
-//
-//    }
+    @Operation(summary = "setPassword", description = "setPassword")
+    @PostMapping("/set_password")
+    public ResponseEntity<NewPasswordDto> setPassword(@RequestBody NewPasswordDto newPasswordDto) {
+
+        if(userService.newPassword(newPasswordDto.getNewPassword(),  newPasswordDto.getCurrentPassword())){
+            return ResponseEntity.ok(newPasswordDto);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+    }
 
     @Operation(summary = "getUser", description = "getUser")
     @GetMapping("/{id}")
