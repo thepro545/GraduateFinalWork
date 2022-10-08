@@ -5,3 +5,4 @@ databaseChangeLog:
       file: liquibase/scripts/create_table__ads.sql
   - include:
       file: liquibase/scripts/create_table__ads_comment.sql
+
