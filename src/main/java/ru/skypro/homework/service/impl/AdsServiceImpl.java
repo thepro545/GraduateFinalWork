@@ -90,7 +90,7 @@ public class AdsServiceImpl implements AdsService {
         if(ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")){
             updatedAdsDto.setAuthor(ads.getAuthor());
             updatedAdsDto.setId(ads.getId());
-            updatedAdsDto.setDescription(ads.getDescription());
+//            updatedAdsDto.setDescription(ads.getDescription());
 
             return adsRepository.save(updatedAdsDto);
         }

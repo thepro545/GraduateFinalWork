@@ -50,7 +50,7 @@ public class AdsController {
 //    @RequestPart("image") @Valid @NotNull @NotBlank MultipartFile image,
     @Operation(summary = "addAds", description = "addAds")
     @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     public AdsDto addAds(@RequestBody CreateAdsDto dto) {
 
         Ads ads = mapper.toEntity(dto);
@@ -120,7 +120,7 @@ public class AdsController {
     }
 
     @Operation(summary = "deleteAdsComment", description = "deleteAdsComment")
-    @DeleteMapping("/{ad_pk}/comment/{id}")
+    @DeleteMapping("/{ad_pk}/comments/{id}")
     public ResponseEntity<HttpStatus> deleteAdsComment(@PathVariable int ad_pk, @PathVariable long id,
                                                        Authentication authentication) {
 
