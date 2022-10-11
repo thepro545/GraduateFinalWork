@@ -20,14 +20,14 @@ public interface AdsService {
 
     Collection<Ads> getAdsMe();
 
-    AdsComment addAdsComment(long ad_pk, AdsComment adsComment);
+    AdsComment addAdsComment(long adPk, AdsComment adsComment);
 
-    Collection<AdsComment> getAdsComments(long ad_pk);
+    Collection<AdsComment> getAdsComments(long adPk);
 
-    AdsComment getAdsComment(long ad_pk, long id);
+    AdsComment getAdsComment(long adPk, long id);
 
-    boolean deleteAdsComment(long ad_pk, long id, Authentication authentication);
+    boolean deleteAdsComment(long adPk, long id, Authentication authentication);
 
-    AdsComment updateAdsComment(long ad_pk, long id, AdsComment toEntity, Authentication authentication);
+    AdsComment updateAdsComment(long adPk, long id, AdsComment toEntity, Authentication authentication);
 }
 
