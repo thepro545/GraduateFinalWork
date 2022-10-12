@@ -17,7 +17,6 @@ public class AdsComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pk")
     private long id;
 
     @ManyToOne

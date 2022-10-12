@@ -69,7 +69,7 @@ public interface AdsService {
     /**
      * Добавление комментария к объявлению
      *
-     * @param adPk ID объявления
+     * @param ad_pk ID объявления
      * @param adsComment Объект комментария
      *
      * @return AdsComment
@@ -79,7 +79,7 @@ public interface AdsService {
     /**
      * Получение всех комментариев определённого объявления
      *
-     * @param adPk ID объявления
+     * @param ad_pk ID объявления
      *
      * @return Collection<AdsComment>
      */
@@ -89,7 +89,7 @@ public interface AdsService {
      * Получение комментария по ID
      *
      * @param id ID комментария
-     * @param adPk ID объявления
+     * @param ad_pk ID объявления
      *
      * @return AdsComment
      */
@@ -99,7 +99,7 @@ public interface AdsService {
      * Удаление комментария по ID
      *
      * @param id ID комментария
-     * @param adPk ID объявления
+     * @param ad_pk ID объявления
      * @param authentication Аутентифицированный пользователь
      *
      * @return Возвращает true если комментарий удалён, иначе false.
@@ -110,7 +110,7 @@ public interface AdsService {
      * Изменение комментария по ID
      *
      * @param id ID комментария
-     * @param adPk ID объявления
+     * @param ad_pk ID объявления
      * @param updateAdsComment Изменённый комментарий
      * @param authentication Аутентифицированный пользователь
      *

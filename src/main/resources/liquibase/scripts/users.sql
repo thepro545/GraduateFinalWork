@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset dzimin:3
+-- changeset dzimin:1
 
 CREATE TABLE IF NOT EXISTS users
 (
