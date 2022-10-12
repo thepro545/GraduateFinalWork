@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS ads
 (
-    pk          BIGSERIAL PRIMARY KEY,
+    id          BIGSERIAL PRIMARY KEY,
     author_id   integer REFERENCES users (id),
     image       text,
     price       int  NOT NULL,

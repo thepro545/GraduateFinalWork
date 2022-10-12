@@ -1,11 +1,10 @@
 package ru.skypro.homework.service.impl;
 
-import liquibase.repackaged.org.apache.commons.collections4.iterators.FilterListIterator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
-import ru.skypro.homework.dto.AdsCommentDto;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
 import ru.skypro.homework.entity.User;
@@ -14,10 +13,12 @@ import ru.skypro.homework.repository.AdsRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
 
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class AdsServiceImpl implements AdsService {
@@ -27,27 +28,24 @@ public class AdsServiceImpl implements AdsService {
     private final AdsCommentRepository adsCommentRepository;
     private final UserRepository userRepository;
 
+
     public AdsServiceImpl(AdsRepository adsRepository, AdsCommentRepository adsCommentRepository, UserRepository userRepository) {
         this.adsRepository = adsRepository;
         this.adsCommentRepository = adsCommentRepository;
         this.userRepository = userRepository;
     }
 
-
     @Override
     public Ads createAds(Ads ads) {
-
         User user = userRepository.findByEmail(SecurityContextHolder.getContext()
                 .getAuthentication().getName()).orElseThrow();
 
         ads.setAuthor(user);
-
         return adsRepository.save(ads);
     }
 
     @Override
     public Ads getFullAds(long id) {
-
         return adsRepository.findById(id).orElseThrow(() -> new NotFoundException("Объявление с id " + id + " не найдено!"));
     }
 
@@ -90,7 +88,7 @@ public class AdsServiceImpl implements AdsService {
         if(ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")){
             updatedAdsDto.setAuthor(ads.getAuthor());
             updatedAdsDto.setId(ads.getId());
-            updatedAdsDto.setDescription(ads.getDescription());
+//            updatedAdsDto.setDescription(ads.getDescription());
 
             return adsRepository.save(updatedAdsDto);
         }
@@ -105,8 +103,6 @@ public class AdsServiceImpl implements AdsService {
 
         return adsRepository.findAll().stream()
                 .filter(ads -> ads.getAuthor().equals(user)).collect(Collectors.toList());
-
-
     }
 
     @Override
