@@ -131,18 +131,18 @@ public class AdsController {
 
     @Operation(summary = "getAdsComments", description = "getAdsComments")
     @GetMapping("/{ad_pk}/comments")
-    public ResponseWrapper<AdsCommentDto> getAdsComments(@PathVariable int ad_pk) {
+    public ResponseWrapper<AdsCommentDto> getAdsComments(@PathVariable int adPk) {
 
-        Collection<AdsComment> list = adsService.getAdsComments(ad_pk);
+        Collection<AdsComment> list = adsService.getAdsComments(adPk);
 
         return ResponseWrapper.of(commentMapper.toDto(list));
     }
 
     @Operation(summary = "addAdsComments", description = "addAdsComments")
     @PostMapping("/{ad_pk}/comments")
-    public AdsCommentDto addAdsComments(@PathVariable long ad_pk, @RequestBody AdsCommentDto adsCommentDto) {
+    public AdsCommentDto addAdsComments(@PathVariable long adPk, @RequestBody AdsCommentDto adsCommentDto) {
 
-        AdsComment adsComment = adsService.addAdsComment(ad_pk, commentMapper.toEntity(adsCommentDto));
+        AdsComment adsComment = adsService.addAdsComment(adPk, commentMapper.toEntity(adsCommentDto));
 
         return commentMapper.toDto(adsComment);
     }
@@ -150,9 +150,10 @@ public class AdsController {
     @Operation(summary = "deleteAdsComment", description = "deleteAdsComment")
     @DeleteMapping("/{ad_pk}/comments/{id}")
     public ResponseEntity<HttpStatus> deleteAdsComment(@PathVariable int ad_pk, @PathVariable long id,
+
                                                        Authentication authentication) {
 
-        if (adsService.deleteAdsComment(ad_pk, id, authentication)) {
+        if (adsService.deleteAdsComment(adPk, id, authentication)) {
             return ResponseEntity.ok().build();
         }
 
@@ -161,20 +162,20 @@ public class AdsController {
 
     @Operation(summary = "getAdsComment", description = "getAdsComment")
     @GetMapping("/{ad_pk}/comment/{id}")
-    public AdsCommentDto getAdsComment(@PathVariable int ad_pk, @PathVariable long id) {
+    public AdsCommentDto getAdsComment(@PathVariable int adPk, @PathVariable long id) {
 
-        AdsComment adsComment = adsService.getAdsComment(ad_pk, id);
+        AdsComment adsComment = adsService.getAdsComment(adPk, id);
 
         return commentMapper.toDto(adsComment);
     }
 
     @Operation(summary = "updateAdsComment", description = "updateAdsComment")
     @PatchMapping("/{ad_pk}/comment/{id}")
-    public ResponseEntity<AdsCommentDto> updateAdsComment(@PathVariable int ad_pk, @PathVariable long id,
+    public ResponseEntity<AdsCommentDto> updateAdsComment(@PathVariable int adPk, @PathVariable long id,
                                                           @RequestBody AdsCommentDto updatedAdsCommentDto,
                                                           Authentication authentication) {
 
-        AdsCommentDto updateAdsCommentDto = commentMapper.toDto(adsService.updateAdsComment(ad_pk, id,
+        AdsCommentDto updateAdsCommentDto = commentMapper.toDto(adsService.updateAdsComment(adPk, id,
                 commentMapper.toEntity(updatedAdsCommentDto), authentication));
 
 
