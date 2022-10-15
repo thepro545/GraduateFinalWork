@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class AdsCommentDto {
 
+    private int id;
     private int author;
     private String createdAt;
-    private int pk;
     private String text;
 
 }
