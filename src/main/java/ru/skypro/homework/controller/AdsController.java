@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import ru.skypro.homework.entity.Images;
 import ru.skypro.homework.mapper.AdsCommentMapper;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.ImagesService;
 import ru.skypro.homework.service.impl.ImagesServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +34,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 @CrossOrigin(value = "http://localhost:3000")
+@RequiredArgsConstructor
 @RestController
 @EnableMethodSecurity
 @RequestMapping("/ads")
@@ -44,15 +47,7 @@ public class AdsController {
 
     private final AdsService adsService;
 
-    private final ImagesServiceImpl imagesService;
-
-
-    public AdsController(AdsMapper mapper, AdsCommentMapper commentMapper, AdsService adsService, ImagesServiceImpl imagesService) {
-        this.mapper = mapper;
-        this.commentMapper = commentMapper;
-        this.adsService = adsService;
-        this.imagesService = imagesService;
-    }
+    private final ImagesService imagesService;
 
     @Operation(summary = "getAllAds", description = "getAllAds")
     @GetMapping
@@ -129,32 +124,30 @@ public class AdsController {
         return ResponseEntity.ok(updateAdsDto);
     }
 
-//    ----------------------------------
-
     @Operation(summary = "getAdsComments", description = "getAdsComments")
-    @GetMapping("/{ad_pk}/comments")
-    public ResponseWrapper<AdsCommentDto> getAdsComments(@PathVariable int ad_pk) {
+    @GetMapping("/{adKey}/comments")
+    public ResponseWrapper<AdsCommentDto> getAdsComments(@PathVariable int adKey) {
 
-        Collection<AdsComment> list = adsService.getAdsComments(ad_pk);
+        Collection<AdsComment> list = adsService.getAdsComments(adKey);
 
         return ResponseWrapper.of(commentMapper.toDto(list));
     }
 
     @Operation(summary = "addAdsComments", description = "addAdsComments")
-    @PostMapping("/{ad_pk}/comments")
-    public AdsCommentDto addAdsComments(@PathVariable long ad_pk, @RequestBody AdsCommentDto adsCommentDto) {
+    @PostMapping("/{adKey}/comments")
+    public AdsCommentDto addAdsComments(@PathVariable long adKey, @RequestBody AdsCommentDto adsCommentDto) {
 
-        AdsComment adsComment = adsService.addAdsComment(ad_pk, commentMapper.toEntity(adsCommentDto));
+        AdsComment adsComment = adsService.addAdsComment(adKey, commentMapper.toEntity(adsCommentDto));
 
         return commentMapper.toDto(adsComment);
     }
 
     @Operation(summary = "deleteAdsComment", description = "deleteAdsComment")
-    @DeleteMapping("/{ad_pk}/comments/{id}")
-    public ResponseEntity<HttpStatus> deleteAdsComment(@PathVariable int ad_pk, @PathVariable long id,
+    @DeleteMapping("/{adKey}/comments/{id}")
+    public ResponseEntity<HttpStatus> deleteAdsComment(@PathVariable int adKey, @PathVariable long id,
                                                        Authentication authentication) {
 
-        if (adsService.deleteAdsComment(ad_pk, id, authentication)) {
+        if (adsService.deleteAdsComment(adKey, id, authentication)) {
             return ResponseEntity.ok().build();
         }
 
@@ -162,21 +155,21 @@ public class AdsController {
     }
 
     @Operation(summary = "getAdsComment", description = "getAdsComment")
-    @GetMapping("/{ad_pk}/comments/{id}")
-    public AdsCommentDto getAdsComment(@PathVariable int ad_pk, @PathVariable long id) {
+    @GetMapping("/{adKey}/comments/{id}")
+    public AdsCommentDto getAdsComment(@PathVariable int adKey, @PathVariable long id) {
 
-        AdsComment adsComment = adsService.getAdsComment(ad_pk, id);
+        AdsComment adsComment = adsService.getAdsComment(adKey, id);
 
         return commentMapper.toDto(adsComment);
     }
 
     @Operation(summary = "updateAdsComment", description = "updateAdsComment")
-    @PatchMapping("/{ad_pk}/comment/{id}")
-    public ResponseEntity<AdsCommentDto> updateAdsComment(@PathVariable int ad_pk, @PathVariable long id,
+    @PatchMapping("/{adKey}/comment/{id}")
+    public ResponseEntity<AdsCommentDto> updateAdsComment(@PathVariable int adKey, @PathVariable long id,
                                                           @RequestBody AdsCommentDto updatedAdsCommentDto,
                                                           Authentication authentication) {
 
-        AdsCommentDto updateAdsCommentDto = commentMapper.toDto(adsService.updateAdsComment(ad_pk, id,
+        AdsCommentDto updateAdsCommentDto = commentMapper.toDto(adsService.updateAdsComment(adKey, id,
                 commentMapper.toEntity(updatedAdsCommentDto), authentication));
 
 

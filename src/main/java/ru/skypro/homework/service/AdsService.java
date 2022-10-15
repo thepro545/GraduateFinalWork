@@ -15,7 +15,6 @@ public interface AdsService {
      * Добавление объявления
      *
      * @param ads Объект объявления
-     *
      * @return Ads
      */
     Ads createAds(Ads ads);
@@ -24,7 +23,6 @@ public interface AdsService {
      * Получение объявления по ID
      *
      * @param id ID объявления
-     *
      * @return Ads
      */
     Ads getAds(long id);
@@ -39,21 +37,18 @@ public interface AdsService {
     /**
      * Удаление объявления по ID
      *
-     * @param id ID объявления
+     * @param id             ID объявления
      * @param authentication Аутентифицированный пользователь
-     *
      * @return Возвращает true если объявление удалено, иначе false.
-     *
      */
     boolean removeAds(long id, Authentication authentication);
 
     /**
      * Изменение объявления по ID
      *
-     * @param id ID объявления
-     * @param updatedAdsDto Изменённое объявление
+     * @param id             ID объявления
+     * @param updatedAdsDto  Изменённое объявление
      * @param authentication Аутентифицированный пользователь
-     *
      * @return Ads Изменённое объявление.
      */
     Ads updateAds(long id, Ads updatedAdsDto, Authentication authentication);
@@ -68,9 +63,8 @@ public interface AdsService {
     /**
      * Добавление комментария к объявлению
      *
-     * @param ad_pk ID объявления
+     * @param ad_pk      ID объявления
      * @param adsComment Объект комментария
-     *
      * @return AdsComment
      */
     AdsComment addAdsComment(long ad_pk, AdsComment adsComment);
@@ -79,7 +73,6 @@ public interface AdsService {
      * Получение всех комментариев определённого объявления
      *
      * @param ad_pk ID объявления
-     *
      * @return Collection<AdsComment>
      */
     Collection<AdsComment> getAdsComments(long ad_pk);
@@ -87,9 +80,8 @@ public interface AdsService {
     /**
      * Получение комментария по ID
      *
-     * @param id ID комментария
+     * @param id    ID комментария
      * @param ad_pk ID объявления
-     *
      * @return AdsComment
      */
     AdsComment getAdsComment(long ad_pk, long id);
@@ -97,10 +89,9 @@ public interface AdsService {
     /**
      * Удаление комментария по ID
      *
-     * @param id ID комментария
-     * @param ad_pk ID объявления
+     * @param id             ID комментария
+     * @param ad_pk          ID объявления
      * @param authentication Аутентифицированный пользователь
-     *
      * @return Возвращает true если комментарий удалён, иначе false.
      */
     boolean deleteAdsComment(long ad_pk, long id, Authentication authentication);
@@ -108,11 +99,10 @@ public interface AdsService {
     /**
      * Изменение комментария по ID
      *
-     * @param id ID комментария
-     * @param ad_pk ID объявления
+     * @param id               ID комментария
+     * @param ad_pk            ID объявления
      * @param updateAdsComment Изменённый комментарий
-     * @param authentication Аутентифицированный пользователь
-     *
+     * @param authentication   Аутентифицированный пользователь
      * @return AdsComment Изменённый комментарий.
      */
     AdsComment updateAdsComment(long ad_pk, long id, AdsComment updateAdsComment, Authentication authentication);

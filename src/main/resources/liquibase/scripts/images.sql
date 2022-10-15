@@ -12,3 +12,6 @@ CREATE TABLE IF NOT EXISTS images
     media_type text
 );
 
+-- changeset dzimin:2
+ALTER TABLE ads
+    ADD COLUMN image_id integer REFERENCES images (id);

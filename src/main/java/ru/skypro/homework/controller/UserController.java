@@ -4,6 +4,7 @@ package ru.skypro.homework.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import liquibase.pro.packaged.T;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import ru.skypro.homework.service.UserService;
 import java.util.Collection;
 
 @CrossOrigin(value = "http://localhost:3000")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Пользователи", description = "UserController")
@@ -28,11 +30,6 @@ public class UserController {
     private final UserService userService;
 
     private final UserMapper mapper;
-
-    public UserController(UserService userService, UserMapper mapper) {
-        this.userService = userService;
-        this.mapper = mapper;
-    }
 
     @Operation(summary = "addUser", description = "addUser")
     @PostMapping
@@ -64,7 +61,7 @@ public class UserController {
     @PostMapping("/set_password")
     public ResponseEntity<NewPasswordDto> setPassword(@RequestBody NewPasswordDto newPasswordDto) {
 
-        if(userService.newPassword(newPasswordDto.getNewPassword(),  newPasswordDto.getCurrentPassword())){
+        if (userService.newPassword(newPasswordDto.getNewPassword(), newPasswordDto.getCurrentPassword())) {
             return ResponseEntity.ok(newPasswordDto);
         }
 
