@@ -7,19 +7,19 @@ import liquibase.pro.packaged.T;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
-import ru.skypro.homework.dto.CreateUserDto;
-import ru.skypro.homework.dto.NewPasswordDto;
-import ru.skypro.homework.dto.ResponseWrapper;
-import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.service.UserService;
 
 import java.util.Collection;
 
+@EnableMethodSecurity
 @CrossOrigin(value = "http://localhost:3000")
 @RequiredArgsConstructor
 @RestController
@@ -77,4 +77,15 @@ public class UserController {
 
         return ResponseEntity.ok(mapper.toDto(user));
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("{id}/updateRole")
+    public ResponseEntity<UserDto> updateRoleUser(@PathVariable long id, Role role){
+
+        UserDto userDto = mapper.toDto(userService.updateRoleUser(id, role));
+
+        return ResponseEntity.ok(userDto);
+
+    }
+
 }

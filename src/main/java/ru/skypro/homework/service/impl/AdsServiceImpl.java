@@ -14,6 +14,7 @@ import ru.skypro.homework.repository.ImagesRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
 
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
