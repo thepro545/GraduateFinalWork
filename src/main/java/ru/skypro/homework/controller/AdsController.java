@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import ru.skypro.homework.entity.Images;
 import ru.skypro.homework.mapper.AdsCommentMapper;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.ImagesService;
 import ru.skypro.homework.service.impl.ImagesServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +31,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 @CrossOrigin(value = "http://localhost:3000")
+@RequiredArgsConstructor
 @RestController
 @EnableMethodSecurity
 @RequestMapping("/ads")
@@ -41,15 +44,7 @@ public class AdsController {
 
     private final AdsService adsService;
 
-    private final ImagesServiceImpl imagesService;
-
-
-    public AdsController(AdsMapper mapper, AdsCommentMapper commentMapper, AdsService adsService, ImagesServiceImpl imagesService) {
-        this.mapper = mapper;
-        this.commentMapper = commentMapper;
-        this.adsService = adsService;
-        this.imagesService = imagesService;
-    }
+    private final ImagesService imagesService;
 
     @Operation(summary = "getAllAds", description = "getAllAds")
     @GetMapping
@@ -126,7 +121,6 @@ public class AdsController {
         return ResponseEntity.ok(updateAdsDto);
     }
 
-
     @Operation(summary = "getAdsComments", description = "getAdsComments")
     @GetMapping("/{adKey}/comments")
     public ResponseWrapper<AdsCommentDto> getAdsComments(@PathVariable int adKey) {
@@ -148,7 +142,6 @@ public class AdsController {
     @Operation(summary = "deleteAdsComment", description = "deleteAdsComment")
     @DeleteMapping("/{adKey}/comments/{id}")
     public ResponseEntity<HttpStatus> deleteAdsComment(@PathVariable int adKey, @PathVariable long id,
-
                                                        Authentication authentication) {
 
         if (adsService.deleteAdsComment(adKey, id, authentication)) {
@@ -159,10 +152,8 @@ public class AdsController {
     }
 
     @Operation(summary = "getAdsComment", description = "getAdsComment")
-
     @GetMapping("/{adKey}/comments/{id}")
     public AdsCommentDto getAdsComment(@PathVariable int adKey, @PathVariable long id) {
-
 
         AdsComment adsComment = adsService.getAdsComment(adKey, id);
 

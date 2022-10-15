@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import ru.skypro.homework.entity.AdsComment;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repository.AdsCommentRepository;
 import ru.skypro.homework.repository.AdsRepository;
+import ru.skypro.homework.repository.ImagesRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
 
@@ -17,21 +19,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@RequiredArgsConstructor
 @Service
 public class AdsServiceImpl implements AdsService {
 
     private final AdsRepository adsRepository;
 
     private final AdsCommentRepository adsCommentRepository;
+
     private final UserRepository userRepository;
 
-
-    public AdsServiceImpl(AdsRepository adsRepository, AdsCommentRepository adsCommentRepository, UserRepository userRepository) {
-        this.adsRepository = adsRepository;
-        this.adsCommentRepository = adsCommentRepository;
-        this.userRepository = userRepository;
-    }
+    private final ImagesRepository imagesRepository;
 
     @Override
     public Ads createAds(Ads ads) {
@@ -60,7 +58,7 @@ public class AdsServiceImpl implements AdsService {
 
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
 
-        if(ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")){
+        if (ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
 
             List<Long> adsComments = adsCommentRepository.findAll().stream()
                     .filter(adsComment -> adsComment.getAds().getId() == ads.getId())
@@ -69,7 +67,13 @@ public class AdsServiceImpl implements AdsService {
 
             adsCommentRepository.deleteAllById(adsComments);
 
+
+            ads.getImage().setAds(null);
+
             adsRepository.delete(ads);
+
+            imagesRepository.deleteById(ads.getImage().getId());
+
             return true;
         }
 
@@ -82,7 +86,7 @@ public class AdsServiceImpl implements AdsService {
         Ads ads = adsRepository.findById(id).orElseThrow(() -> new NotFoundException("Объявление с id " + id + " не найдено!"));
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
 
-        if(ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")){
+        if (ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
             updatedAdsDto.setAuthor(ads.getAuthor());
             updatedAdsDto.setId(ads.getId());
             updatedAdsDto.setImage(ads.getImage());
@@ -128,7 +132,8 @@ public class AdsServiceImpl implements AdsService {
         AdsComment adsComment = adsCommentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Комментарий с id " + id + " не найден!"));
 
-        if (adsComment.getAds().getId() != adKey){
+        if (adsComment.getAds().getId() != adKey) {
+
             throw new NotFoundException("Комментарий с id " + id + " не принадлежит объявлению с id " + adKey);
         }
 
@@ -143,9 +148,10 @@ public class AdsServiceImpl implements AdsService {
 
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
 
-        if(adsComment.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")){
+        if (adsComment.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
 
-            if (adsComment.getAds().getId() != adKey){
+            if (adsComment.getAds().getId() != adKey) {
+
                 throw new NotFoundException("Комментарий с id " + id + " не принадлежит объявлению с id " + adKey);
             }
 
@@ -164,9 +170,10 @@ public class AdsServiceImpl implements AdsService {
 
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
 
-        if(updateAdsComment.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")){
+        if (updateAdsComment.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
 
-            if (updateAdsComment.getAds().getId() != adKey){
+            if (updateAdsComment.getAds().getId() != adKey) {
+
                 throw new NotFoundException("Комментарий с id " + id + " не принадлежит объявлению с id " + adKey);
             }
             updateAdsComment.setText(updatedAdsComment.getText());
