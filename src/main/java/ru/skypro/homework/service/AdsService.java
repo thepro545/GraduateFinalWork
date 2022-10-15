@@ -1,7 +1,6 @@
 package ru.skypro.homework.service;
 
 import org.springframework.security.core.Authentication;
-import ru.skypro.homework.dto.AdsCommentDto;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
 
@@ -28,7 +27,7 @@ public interface AdsService {
      *
      * @return Ads
      */
-    Ads getFullAds(long id);
+    Ads getAds(long id);
 
     /**
      * Получение всех объявлений

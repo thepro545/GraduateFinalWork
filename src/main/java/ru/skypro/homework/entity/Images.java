@@ -1,6 +1,7 @@
 package ru.skypro.homework.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -13,20 +14,24 @@ import javax.persistence.*;
 @Setter
 public class Images {
 
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Id
-        private Long id;
-        @Lob
-        private byte[] image;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long id;
 
-        private String filePath;
+    @Lob
+    @Type(type = "binary")
+    private byte[] image;
 
-        private long fileSize;
+    private String filePath;
 
-        @OneToOne
-        private Ads ads;
+    private long fileSize;
 
-        public String toString() {
-            return "AdsEntity(id=" + this.getId() + ", image=" + java.util.Arrays.toString(this.getImage()) + ")";
-        }
+    private String mediaType;
+
+    @OneToOne
+    private Ads ads;
+
+    public String toString() {
+        return "AdsEntity(id=" + this.getId() + ", image=" + java.util.Arrays.toString(this.getImage()) + ")";
+    }
 }
