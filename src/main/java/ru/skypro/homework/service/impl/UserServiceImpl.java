@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
+import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.security.UserDetailsServiceImpl;
@@ -84,5 +85,20 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    @Override
+    public User updateRoleUser(long id, Role role) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден!"));
+
+        user.setRole(role.name());
+
+        userRepository.save(user);
+
+        userDetailsService.loadUserByUsername(user.getEmail());
+
+        return user;
     }
 }
