@@ -3,14 +3,11 @@ package ru.skypro.homework.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import liquibase.pro.packaged.T;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.UserMapper;

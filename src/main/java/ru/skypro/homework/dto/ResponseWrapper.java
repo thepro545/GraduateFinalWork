@@ -1,7 +1,5 @@
 package ru.skypro.homework.dto;
 
-import liquibase.pro.packaged.E;
-import liquibase.pro.packaged.T;
 import lombok.Data;
 
 import java.util.Collection;

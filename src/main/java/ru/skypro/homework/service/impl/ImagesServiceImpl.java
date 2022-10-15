@@ -13,7 +13,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -44,7 +43,7 @@ public class ImagesServiceImpl {
         }
 
         Images images = new Images();
-        images.setFilePath(imageFile.getName());
+        images.setFilePath(filePath.toString());
         images.setFileSize(imageFile.getSize());
         images.setMediaType(imageFile.getContentType());
         images.setImage(imageFile.getBytes());

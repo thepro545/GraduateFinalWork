@@ -11,6 +11,3 @@ CREATE TABLE IF NOT EXISTS ads
     description text NOT NULL
 );
 
--- changeset dzimin:2
-ALTER TABLE ads
-    ADD COLUMN image_id integer REFERENCES images (id);
