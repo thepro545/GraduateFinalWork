@@ -14,7 +14,6 @@ import ru.skypro.homework.repository.ImagesRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
 
-import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -85,7 +84,6 @@ public class AdsServiceImpl implements AdsService {
     public Ads updateAds(long id, Ads updatedAdsDto, Authentication authentication) {
 
         Ads ads = adsRepository.findById(id).orElseThrow(() -> new NotFoundException("Объявление с id " + id + " не найдено!"));
-
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
 
         if (ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
@@ -119,7 +117,6 @@ public class AdsServiceImpl implements AdsService {
         adsComment.setCreatedAt(LocalDateTime.now());
 
         return adsCommentRepository.save(adsComment);
-
     }
 
     @Override
@@ -127,7 +124,6 @@ public class AdsServiceImpl implements AdsService {
 
         return adsCommentRepository.findAll().stream().filter(adsComment -> adsComment.getAds().getId() == adKey)
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -137,6 +133,7 @@ public class AdsServiceImpl implements AdsService {
                 .orElseThrow(() -> new NotFoundException("Комментарий с id " + id + " не найден!"));
 
         if (adsComment.getAds().getId() != adKey) {
+
             throw new NotFoundException("Комментарий с id " + id + " не принадлежит объявлению с id " + adKey);
         }
 
@@ -154,6 +151,7 @@ public class AdsServiceImpl implements AdsService {
         if (adsComment.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
 
             if (adsComment.getAds().getId() != adKey) {
+
                 throw new NotFoundException("Комментарий с id " + id + " не принадлежит объявлению с id " + adKey);
             }
 
@@ -175,6 +173,7 @@ public class AdsServiceImpl implements AdsService {
         if (updateAdsComment.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
 
             if (updateAdsComment.getAds().getId() != adKey) {
+
                 throw new NotFoundException("Комментарий с id " + id + " не принадлежит объявлению с id " + adKey);
             }
             updateAdsComment.setText(updatedAdsComment.getText());

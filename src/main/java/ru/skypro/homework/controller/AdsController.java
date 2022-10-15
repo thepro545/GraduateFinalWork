@@ -28,9 +28,6 @@ import ru.skypro.homework.service.impl.ImagesServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.Collection;
 
 @CrossOrigin(value = "http://localhost:3000")

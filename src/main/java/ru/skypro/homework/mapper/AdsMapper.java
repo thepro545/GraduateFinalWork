@@ -1,19 +1,11 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ads;
-import ru.skypro.homework.repository.UserRepository;
-import ru.skypro.homework.service.UserService;
-import ru.skypro.homework.service.impl.UserServiceImpl;
-
-import java.util.Collection;
-import java.util.List;
 
 @Mapper
 public interface AdsMapper extends WebMapper<AdsDto, Ads> {

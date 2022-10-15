@@ -3,7 +3,6 @@ package ru.skypro.homework.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
@@ -14,8 +13,6 @@ import ru.skypro.homework.security.UserDetailsServiceImpl;
 import ru.skypro.homework.service.UserService;
 
 import java.util.Collection;
-import java.util.List;
-
 import static ru.skypro.homework.dto.Role.USER;
 
 @RequiredArgsConstructor
@@ -71,8 +68,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(SecurityContextHolder.getContext()
                 .getAuthentication().getName()).orElseThrow();
 
-
         if (passwordEncoder.matches(currentPassword, user.getPassword())) {
+
             user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
             userDetailsService.loadUserByUsername(user.getEmail());
