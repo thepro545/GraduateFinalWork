@@ -45,7 +45,7 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public Ads getFullAds(long id) {
+    public Ads getAds(long id) {
         return adsRepository.findById(id).orElseThrow(() -> new NotFoundException("Объявление с id " + id + " не найдено!"));
     }
 
