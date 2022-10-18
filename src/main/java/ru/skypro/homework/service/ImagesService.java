@@ -28,4 +28,12 @@ public interface ImagesService {
      * @return Images
      */
     Images getImage(long id);
+
+
+    /**
+     * Удаление картинки по ID
+     *
+     * @param id Id картинки
+     */
+    void removeImage(long id);
 }

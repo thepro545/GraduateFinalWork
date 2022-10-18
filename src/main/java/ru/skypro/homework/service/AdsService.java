@@ -1,6 +1,7 @@
 package ru.skypro.homework.service;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
 
@@ -63,48 +64,48 @@ public interface AdsService {
     /**
      * Добавление комментария к объявлению
      *
-     * @param ad_pk      ID объявления
+     * @param adKey      ID объявления
      * @param adsComment Объект комментария
      * @return AdsComment
      */
-    AdsComment addAdsComment(long ad_pk, AdsComment adsComment);
+    AdsComment addAdsComment(long adKey, AdsComment adsComment);
 
     /**
      * Получение всех комментариев определённого объявления
      *
-     * @param ad_pk ID объявления
+     * @param adKey ID объявления
      * @return Collection<AdsComment>
      */
-    Collection<AdsComment> getAdsComments(long ad_pk);
+    Collection<AdsComment> getAdsComments(long adKey);
 
     /**
      * Получение комментария по ID
      *
      * @param id    ID комментария
-     * @param ad_pk ID объявления
+     * @param adKey ID объявления
      * @return AdsComment
      */
-    AdsComment getAdsComment(long ad_pk, long id);
+    AdsComment getAdsComment(long adKey, long id);
 
     /**
      * Удаление комментария по ID
      *
      * @param id             ID комментария
-     * @param ad_pk          ID объявления
+     * @param adKey          ID объявления
      * @param authentication Аутентифицированный пользователь
      * @return Возвращает true если комментарий удалён, иначе false.
      */
-    boolean deleteAdsComment(long ad_pk, long id, Authentication authentication);
+    boolean deleteAdsComment(long adKey, long id, Authentication authentication);
 
     /**
      * Изменение комментария по ID
      *
      * @param id               ID комментария
-     * @param ad_pk            ID объявления
+     * @param adKey            ID объявления
      * @param updateAdsComment Изменённый комментарий
      * @param authentication   Аутентифицированный пользователь
      * @return AdsComment Изменённый комментарий.
      */
-    AdsComment updateAdsComment(long ad_pk, long id, AdsComment updateAdsComment, Authentication authentication);
+    AdsComment updateAdsComment(long adKey, long id, AdsComment updateAdsComment, Authentication authentication);
 }
 

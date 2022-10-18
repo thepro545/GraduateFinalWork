@@ -24,10 +24,10 @@ import ru.skypro.homework.mapper.AdsCommentMapper;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.ImagesService;
-import ru.skypro.homework.service.impl.ImagesServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import java.util.Collection;
 
 @CrossOrigin(value = "http://localhost:3000")
@@ -107,18 +107,34 @@ public class AdsController {
         return mapper.toFullAdsDto(adsService.getAds(id));
     }
 
+    @SneakyThrows
     @Operation(summary = "updateAds", description = "updateAds")
-    @PatchMapping("/{id}")
-    public ResponseEntity<AdsDto> updateAds(@PathVariable long id, @RequestBody AdsDto updatedAdsDto,
-                                            Authentication authentication) {
+    @PatchMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AdsDto> updateAds(@PathVariable long id, Authentication authentication,
+                                            @Parameter(in = ParameterIn.DEFAULT, description = "Новая картинка",
+                                                   schema = @Schema())
+                                            @Null @RequestPart(value = "image", required = false)  MultipartFile image,
+                                            @Null @RequestPart(value = "properties", required = false)  @Valid AdsDto updatedAdsDto) {
 
-        AdsDto updateAdsDto = mapper.toDto(adsService.updateAds(id, mapper.toEntity(updatedAdsDto), authentication));
+        if (image != null) {
+            Ads ads = adsService.getAds(id);
+            long adsOldImageId = ads.getImage().getId();
+            Images images = imagesService.uploadImage(image, ads);
 
-        if (updateAdsDto.equals(updatedAdsDto)) {
-            return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+            imagesService.removeImage(adsOldImageId);
+
+            ads.setImage(images);
+
+            return ResponseEntity.ok(mapper.toDto(adsService.createAds(ads)));
+        }else {
+            AdsDto updateAdsDto = mapper.toDto(adsService.updateAds(id, mapper.toEntity(updatedAdsDto), authentication));
+
+            if (updateAdsDto.equals(updatedAdsDto)) {
+                return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+            }
+
+            return ResponseEntity.ok(updateAdsDto);
         }
-
-        return ResponseEntity.ok(updateAdsDto);
     }
 
     @Operation(summary = "getAdsComments", description = "getAdsComments")
