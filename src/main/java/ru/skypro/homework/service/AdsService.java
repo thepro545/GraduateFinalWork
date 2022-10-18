@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
+import ru.skypro.homework.entity.Images;
 
 import java.util.Collection;
 
@@ -107,5 +108,9 @@ public interface AdsService {
      * @return AdsComment Изменённый комментарий.
      */
     AdsComment updateAdsComment(long adKey, long id, AdsComment updateAdsComment, Authentication authentication);
+
+    Ads updateAdsImage(Ads ads, Authentication authentication, Images image);
 }
+
+
 

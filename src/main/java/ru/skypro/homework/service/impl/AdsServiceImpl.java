@@ -1,13 +1,14 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
+import ru.skypro.homework.entity.Images;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.repository.AdsCommentRepository;
 import ru.skypro.homework.repository.AdsRepository;
@@ -184,6 +185,23 @@ public class AdsServiceImpl implements AdsService {
 
         return updateAdsComment;
 
+    }
+
+    @SneakyThrows
+    @Override
+    public Ads updateAdsImage(Ads ads, Authentication authentication, Images image) {
+
+
+//        Ads ads = adsRepository.findById(id).orElseThrow(() -> new NotFoundException("Объявление с id " + id + " не найдено!"));
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
+
+        if (ads.getAuthor().getEmail().equals(user.getEmail()) || user.getRole().equals("ADMIN")) {
+
+            return adsRepository.save(ads);
+
+        }
+
+        return ads;
     }
 }
 

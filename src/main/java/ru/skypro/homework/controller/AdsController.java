@@ -108,25 +108,38 @@ public class AdsController {
     }
 
     @SneakyThrows
-    @Operation(summary = "updateAds", description = "updateAds")
-    @PatchMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AdsDto> updateAds(@PathVariable long id, Authentication authentication,
+    @Operation(summary = "updateAdsImage", description = "updateAdsImage")
+    @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AdsDto> updateAdsImage(@PathVariable long id, Authentication authentication,
                                             @Parameter(in = ParameterIn.DEFAULT, description = "Новая картинка",
-                                                   schema = @Schema())
-                                            @Null @RequestPart(value = "image", required = false)  MultipartFile image,
-                                            @Null @RequestPart(value = "properties", required = false)  @Valid AdsDto updatedAdsDto) {
+                                                    schema = @Schema())
+                                            @RequestPart(value = "image") @Valid MultipartFile image) {
 
-        if (image != null) {
             Ads ads = adsService.getAds(id);
+
             long adsOldImageId = ads.getImage().getId();
+
             Images images = imagesService.uploadImage(image, ads);
 
             imagesService.removeImage(adsOldImageId);
 
             ads.setImage(images);
 
-            return ResponseEntity.ok(mapper.toDto(adsService.createAds(ads)));
-        }else {
+            Ads updatedAds = adsService.updateAdsImage(ads, authentication, images);
+
+        if (!ads.equals(updatedAds)) {
+            return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok(mapper.toDto(updatedAds));
+    }
+
+    @SneakyThrows
+    @Operation(summary = "updateAds", description = "updateAds")
+    @PatchMapping("/{id}")
+    public ResponseEntity<AdsDto> updateAds(@PathVariable long id, Authentication authentication,
+                                            @RequestBody AdsDto updatedAdsDto) {
+
             AdsDto updateAdsDto = mapper.toDto(adsService.updateAds(id, mapper.toEntity(updatedAdsDto), authentication));
 
             if (updateAdsDto.equals(updatedAdsDto)) {
@@ -134,7 +147,6 @@ public class AdsController {
             }
 
             return ResponseEntity.ok(updateAdsDto);
-        }
     }
 
     @Operation(summary = "getAdsComments", description = "getAdsComments")
