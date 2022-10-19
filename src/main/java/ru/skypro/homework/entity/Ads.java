@@ -27,7 +27,6 @@ public class Ads {
 
     private String description;
 
-    private String image;
-
-
+    @OneToOne(fetch = FetchType.EAGER)
+    private Images image;
 }
