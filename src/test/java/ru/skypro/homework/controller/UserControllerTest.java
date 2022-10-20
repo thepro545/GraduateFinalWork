@@ -43,8 +43,6 @@ class UserControllerTest {
     @MockBean
     private UserMapper userMapper;
 
-    @InjectMocks
-    private UserController userController;
 
     @Autowired
     UserControllerTest(MockMvc mockMvc, ObjectMapper objectMapper) {
