@@ -4,7 +4,6 @@ import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.entity.User;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Сервис для работы с пользователем

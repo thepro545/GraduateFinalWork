@@ -3,7 +3,6 @@ package ru.skypro.homework.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import liquibase.pro.packaged.T;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,7 +77,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("{id}/updateRole")
-    public ResponseEntity<UserDto> updateRoleUser(@PathVariable long id, Role role){
+    public ResponseEntity<UserDto> updateRoleUser(@PathVariable long id, Role role) {
 
         UserDto userDto = mapper.toDto(userService.updateRoleUser(id, role));
 

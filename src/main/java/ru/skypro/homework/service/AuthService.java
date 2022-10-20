@@ -1,7 +1,5 @@
 package ru.skypro.homework.service;
 
-import ru.skypro.homework.dto.RegisterReqDto;
-import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.entity.User;
 
 /**

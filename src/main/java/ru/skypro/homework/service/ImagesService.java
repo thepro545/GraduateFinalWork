@@ -14,7 +14,7 @@ public interface ImagesService {
     /**
      * Сохранение картинки в БД
      *
-     * @param ads Объект объявления
+     * @param ads       Объект объявления
      * @param imageFile Объект картинка
      * @return Images
      */
@@ -24,7 +24,6 @@ public interface ImagesService {
      * Получение картинки по ID
      *
      * @param id Id картинки
-     *
      * @return Images
      */
     Images getImage(long id);
