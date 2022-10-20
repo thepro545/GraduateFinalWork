@@ -50,9 +50,9 @@ public class UserController {
 
     @Operation(summary = "updateUser", description = "updateUser")
     @PatchMapping("/me")
-    public UserDto update(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> update(@RequestBody UserDto userDto) {
         User user = mapper.toEntity(userDto);
-        return mapper.toDto(userService.update(user));
+        return ResponseEntity.ok(mapper.toDto(userService.update(user)));
     }
 
     @Operation(summary = "setPassword", description = "setPassword")
