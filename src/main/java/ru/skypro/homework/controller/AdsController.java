@@ -125,8 +125,10 @@ public class AdsController {
 
         Ads updatedAds = adsService.updateAdsImage(ads, authentication, images);
 
+        imagesService.removeImage(adsOldImageId);
+
         if (!ads.equals(updatedAds)) {
-            return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpServletResponse.SC_FORBIDDEN).build();
         }
 
         return ResponseEntity.ok(mapper.toDto(updatedAds));

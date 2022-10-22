@@ -66,7 +66,7 @@ public class ImagesServiceImpl implements ImagesService {
     public void removeImage(long id) {
         Images images = imagesRepository.findById(id).orElseThrow(() -> new NotFoundException("Картинка с id " + id + " не найдена!"));
 
-//        images.getAds().setImage(null);
+        images.setAds(null);
 
         imagesRepository.deleteById(id);
     }

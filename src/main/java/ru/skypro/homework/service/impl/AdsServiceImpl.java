@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class AdsServiceImpl implements AdsService {
 
     private final AdsRepository adsRepository;
