@@ -242,7 +242,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities={"ADMIN"})
+    @WithMockUser(authorities = {"ADMIN"})
     void updateRoleUser() throws Exception {
 
         User user = new User();
