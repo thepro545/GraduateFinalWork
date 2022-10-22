@@ -3,7 +3,6 @@ package ru.skypro.homework.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,7 +12,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.skypro.homework.dto.*;
+import ru.skypro.homework.dto.CreateUserDto;
+import ru.skypro.homework.dto.NewPasswordDto;
+import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.service.impl.UserServiceImpl;
@@ -25,7 +27,8 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
 @ExtendWith(SpringExtension.class)
