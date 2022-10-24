@@ -111,24 +111,24 @@ public class AdsController {
     @Operation(summary = "updateAdsImage", description = "updateAdsImage")
     @PatchMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> updateAdsImage(@PathVariable long id, Authentication authentication,
-                                            @Parameter(in = ParameterIn.DEFAULT, description = "Новая картинка",
-                                                    schema = @Schema())
-                                            @RequestPart(value = "image") @Valid MultipartFile image) {
+                                                 @Parameter(in = ParameterIn.DEFAULT, description = "Новая картинка",
+                                                         schema = @Schema())
+                                                 @RequestPart(value = "image") @Valid MultipartFile image) {
 
-            Ads ads = adsService.getAds(id);
+        Ads ads = adsService.getAds(id);
 
-            long adsOldImageId = ads.getImage().getId();
+        long adsOldImageId = ads.getImage().getId();
 
-            Images images = imagesService.uploadImage(image, ads);
+        Images images = imagesService.uploadImage(image, ads);
 
-            imagesService.removeImage(adsOldImageId);
+        ads.setImage(images);
 
-            ads.setImage(images);
+        Ads updatedAds = adsService.updateAdsImage(ads, authentication, images);
 
-            Ads updatedAds = adsService.updateAdsImage(ads, authentication, images);
+        imagesService.removeImage(adsOldImageId);
 
         if (!ads.equals(updatedAds)) {
-            return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpServletResponse.SC_FORBIDDEN).build();
         }
 
         return ResponseEntity.ok(mapper.toDto(updatedAds));
@@ -140,13 +140,13 @@ public class AdsController {
     public ResponseEntity<AdsDto> updateAds(@PathVariable long id, Authentication authentication,
                                             @RequestBody AdsDto updatedAdsDto) {
 
-            AdsDto updateAdsDto = mapper.toDto(adsService.updateAds(id, mapper.toEntity(updatedAdsDto), authentication));
+        AdsDto updateAdsDto = mapper.toDto(adsService.updateAds(id, mapper.toEntity(updatedAdsDto), authentication));
 
-            if (updateAdsDto.equals(updatedAdsDto)) {
-                return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
-            }
+        if (updateAdsDto.equals(updatedAdsDto)) {
+            return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+        }
 
-            return ResponseEntity.ok(updateAdsDto);
+        return ResponseEntity.ok(updateAdsDto);
     }
 
     @Operation(summary = "getAdsComments", description = "getAdsComments")
@@ -204,6 +204,4 @@ public class AdsController {
 
         return ResponseEntity.ok(updateAdsCommentDto);
     }
-
-
 }

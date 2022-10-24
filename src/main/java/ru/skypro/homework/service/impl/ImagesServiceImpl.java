@@ -22,10 +22,10 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class ImagesServiceImpl implements ImagesService {
 
-    @Value("${path.to.images.folder}")
-    private String imagesDir;
     private final ImagesRepository imagesRepository;
     private final AdsService adsService;
+    @Value("${path.to.images.folder}")
+    private String imagesDir;
 
     @Override
     public Images uploadImage(MultipartFile imageFile, Ads ads) throws IOException {
@@ -63,10 +63,10 @@ public class ImagesServiceImpl implements ImagesService {
     }
 
     @Override
-    public void removeImage(long id){
+    public void removeImage(long id) {
         Images images = imagesRepository.findById(id).orElseThrow(() -> new NotFoundException("Картинка с id " + id + " не найдена!"));
 
-        images.getAds().setImage(null);
+        images.setAds(null);
 
         imagesRepository.deleteById(id);
     }

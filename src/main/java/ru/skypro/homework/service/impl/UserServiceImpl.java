@@ -1,7 +1,6 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import ru.skypro.homework.security.UserDetailsServiceImpl;
 import ru.skypro.homework.service.UserService;
 
 import java.util.Collection;
+
 import static ru.skypro.homework.dto.Role.USER;
 
 @RequiredArgsConstructor
@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService {
         if (createUser.getRole() == null) {
             createUser.setRole(USER.name());
         }
+
+        user.setPassword(passwordEncoder.encode(createUser.getPassword()));
 
         return userRepository.save(createUser);
     }
