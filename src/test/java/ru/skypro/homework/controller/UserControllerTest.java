@@ -156,7 +156,7 @@ class UserControllerTest {
         userDto.setLastName("Ivanov");
         userDto.setPhone("+79991254698");
 
-        when(userService.update(any())).thenReturn(user);
+        when(userService.updateUser(any())).thenReturn(user);
         when(userMapper.toEntity(any(UserDto.class))).thenReturn(user);
         when(userMapper.toDto(any(User.class))).thenReturn(userDto);
 
@@ -266,7 +266,7 @@ class UserControllerTest {
         userDto.setPhone("+79991254698");
 
 
-        when(userService.updateRoleUser(anyLong(), any(Role.class))).thenReturn(user);
+        when(userService.updateRole(anyLong(), any(Role.class))).thenReturn(user);
 
         when(userMapper.toDto(any(User.class))).thenReturn(userDto);
 

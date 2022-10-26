@@ -23,11 +23,11 @@ import ru.skypro.homework.dto.CreateAdsDto;
 import ru.skypro.homework.dto.FullAdsDto;
 import ru.skypro.homework.entity.Ads;
 import ru.skypro.homework.entity.AdsComment;
-import ru.skypro.homework.entity.Images;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.AdsCommentMapper;
 import ru.skypro.homework.mapper.AdsMapper;
-import ru.skypro.homework.service.ImagesService;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.impl.AdsServiceImpl;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ class AdsControllerTest {
     private AdsCommentMapper adsCommentMapper;
 
     @MockBean
-    private ImagesService imagesService;
+    private ImageService imagesService;
 
     @InjectMocks
     private AdsController adsController;
@@ -82,8 +82,8 @@ class AdsControllerTest {
 
         byte[] imgStub = new byte[]{1, 0, 1};
         byte[] imgStub1 = new byte[]{0, 1, 0};
-        Images image = new Images();
-        Images image1 = new Images();
+        Image image = new Image();
+        Image image1 = new Image();
         image.setImage(imgStub);
         image1.setImage(imgStub1);
 
@@ -127,7 +127,7 @@ class AdsControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void addAds() throws Exception {
-        doReturn(new Images()).when(imagesService).uploadImage(any(), any());
+        doReturn(new Image()).when(imagesService).uploadImage(any(), any());
         doReturn(new Ads()).when(adsService).createAds(any());
 
         byte[] imgStub = new byte[]{1, 0, 1};
@@ -179,7 +179,7 @@ class AdsControllerTest {
     @Test
     void removeAds() throws Exception {
 
-        when(adsService.removeAds(anyLong(), any())).thenReturn(true);
+        when(adsService.removeAdsById(anyLong(), any())).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/ads/1"))
                 .andDo(print())
@@ -189,7 +189,7 @@ class AdsControllerTest {
     @Test
     void removeAdsThrows() throws Exception {
 
-        when(adsService.removeAds(anyLong(), any())).thenReturn(false);
+        when(adsService.removeAdsById(anyLong(), any())).thenReturn(false);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/ads/1"))
                 .andDo(print())
@@ -204,7 +204,7 @@ class AdsControllerTest {
 
         fullAdsDto.setEmail("d@mail.ru");
 
-        when(adsService.getAds(anyLong())).thenReturn(ads);
+        when(adsService.getAdsById(anyLong())).thenReturn(ads);
         when(adsMapper.toFullAdsDto(any(Ads.class))).thenReturn(fullAdsDto);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/ads/1"))
@@ -212,18 +212,18 @@ class AdsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("d@mail.ru"));
 
-        verify(adsService, times(1)).getAds(anyLong());
+        verify(adsService, times(1)).getAdsById(anyLong());
     }
 
     @Test
     void updateAdsImage() throws Exception {
         Ads adsStub = new Ads();
-        Images imageStub = new Images();
+        Image imageStub = new Image();
         imageStub.setId(1L);
         adsStub.setImage(imageStub);
 
-        when(adsService.getAds(anyLong())).thenReturn(adsStub);
-        when(imagesService.uploadImage(any(), any())).thenReturn(new Images());
+        when(adsService.getAdsById(anyLong())).thenReturn(adsStub);
+        when(imagesService.uploadImage(any(), any())).thenReturn(new Image());
         when(adsService.updateAdsImage(any(), any(), any())).thenReturn(adsStub);
 
         byte[] imgStub = new byte[]{1, 0, 1};

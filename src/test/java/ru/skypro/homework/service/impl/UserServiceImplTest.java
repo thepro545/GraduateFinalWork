@@ -99,7 +99,7 @@ class UserServiceImplTest {
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(testUser));
         when(userRepository.save(any(User.class))).thenReturn(testUser);
 
-        User user = userService.update(new User());
+        User user = userService.updateUser(new User());
 
         assertEquals(testUser, user);
 
@@ -176,7 +176,7 @@ class UserServiceImplTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(testUser));
         when(userRepository.save(any(User.class))).thenReturn(testUser);
 
-        User user = userService.updateRoleUser(1L, Role.USER);
+        User user = userService.updateRole(1L, Role.USER);
 
         assertEquals(testUser, user);
 

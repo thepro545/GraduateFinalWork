@@ -6,20 +6,22 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-public class ResponseWrapper<D> {
+public class ResponseWrapper<T> {
 
     private int count;
-    private Collection<D> results;
 
+    private Collection<T> results;
 
     public static <T> ResponseWrapper<T> of(List<T> results) {
-        ResponseWrapper<T> rw = new ResponseWrapper<>();
-        if (results == null) {
-            return rw;
-        }
-        rw.results = results;
-        rw.count = results.size();
+        ResponseWrapper<T> responseWrapper = new ResponseWrapper<>();
 
-        return rw;
+        if (results == null) {
+            return responseWrapper;
+        }
+
+        responseWrapper.results = results;
+        responseWrapper.count = results.size();
+
+        return responseWrapper;
     }
 }
