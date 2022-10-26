@@ -141,6 +141,8 @@ public class AdsServiceImpl implements AdsService {
 
         AdsComment adsComment = getAdsComment(adKey, id);
 
+        checkPermissionToAdsComment(adsComment);
+
         adsComment.setText(updatedAdsComment.getText());
 
         return adsCommentRepository.save(adsComment);
