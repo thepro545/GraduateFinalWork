@@ -30,6 +30,7 @@ public class RegisterReqDto {
     @Size(min = 3)
     private String lastName;
 
+    @NotBlank
     @Pattern(regexp = PHONE_REGEXP)
     private String phone;
 

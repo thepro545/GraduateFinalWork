@@ -8,7 +8,8 @@ import ru.skypro.homework.entity.AdsComment;
 
 public class SecurityUtils {
 
-    private SecurityUtils() {}
+    private SecurityUtils() {
+    }
 
     public static MyUserDetails getUserDetailsFromContext() {
         return (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -180,7 +180,7 @@ class UserControllerTest {
         passwordDto.setCurrentPassword("12345678");
         passwordDto.setNewPassword("87654321");
 
-        when(userService.newPassword(anyString(), anyString())).thenReturn(true);
+        doNothing().when(userService).newPassword(anyString(), anyString());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users/set_password")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -190,23 +190,6 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currentPassword").value(passwordDto.getCurrentPassword()))
                 .andExpect(jsonPath("$.newPassword").value(passwordDto.getNewPassword()));
-    }
-
-    @Test
-    void setPasswordNotFound() throws Exception {
-
-        NewPasswordDto passwordDto = new NewPasswordDto();
-        passwordDto.setCurrentPassword("12345678");
-        passwordDto.setNewPassword("87654321");
-
-        when(userService.newPassword(anyString(), anyString())).thenReturn(false);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/set_password")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(passwordDto))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -254,7 +237,7 @@ class UserControllerTest {
         user.setLastName("Ivanov");
         user.setPassword("12345678");
         user.setPhone("+79991254698");
-        user.setRole("ADMIN");
+        user.setRole(Role.ADMIN);
 
 
         UserDto userDto = new UserDto();

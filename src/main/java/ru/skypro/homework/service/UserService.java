@@ -53,7 +53,7 @@ public interface UserService {
     /**
      * Изменение роли пользователя
      *
-     * @param id идентификатор пользователя
+     * @param id   идентификатор пользователя
      * @param role новая роль
      */
     User updateRole(long id, Role role);

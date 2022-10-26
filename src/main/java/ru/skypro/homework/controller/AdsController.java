@@ -115,7 +115,7 @@ public class AdsController {
     @Operation(summary = "updateAds", description = "updateAds")
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(@PathVariable("id") long id,
-                                            @RequestBody AdsDto updatedAdsDto) {
+                                            @Valid @RequestBody AdsDto updatedAdsDto) {
 
         Ads ads = mapper.toEntity(updatedAdsDto);
 
@@ -137,7 +137,8 @@ public class AdsController {
 
     @Operation(summary = "addAdsComments", description = "addAdsComments")
     @PostMapping("/{adKey}/comments")
-    public AdsCommentDto addAdsComments(@PathVariable("adKey") long adKey, @RequestBody AdsCommentDto adsCommentDto) {
+    public AdsCommentDto addAdsComments(@PathVariable("adKey") long adKey,
+                                        @Valid @RequestBody AdsCommentDto adsCommentDto) {
 
         AdsComment adsComment = adsService.addAdsComment(adKey, commentMapper.toEntity(adsCommentDto));
 
@@ -166,7 +167,7 @@ public class AdsController {
     @PatchMapping("/{adKey}/comment/{id}")
     public ResponseEntity<AdsCommentDto> updateAdsComment(@PathVariable("adKey") int adKey,
                                                           @PathVariable("id") long id,
-                                                          @RequestBody AdsCommentDto updatedAdsCommentDto) {
+                                                          @Valid @RequestBody AdsCommentDto updatedAdsCommentDto) {
 
         AdsComment adsComment = commentMapper.toEntity(updatedAdsCommentDto);
 

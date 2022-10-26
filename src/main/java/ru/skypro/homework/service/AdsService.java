@@ -38,7 +38,7 @@ public interface AdsService {
      * Удаление объявления по ID
      *
      * @param id ID объявления
-     * @return Удаленное объясвление
+     * @return Удаленное объявление
      */
     Ads removeAdsById(long id);
 
@@ -86,8 +86,8 @@ public interface AdsService {
     /**
      * Удаление комментария по ID
      *
-     * @param id             ID комментария
-     * @param adKey          ID объявления
+     * @param id    ID комментария
+     * @param adKey ID объявления
      * @return Удалённый комментарий
      */
     AdsComment deleteAdsComment(long adKey, long id);
@@ -106,9 +106,9 @@ public interface AdsService {
     /**
      * Обновление картинки объявления
      *
-     * @param ads объявление
+     * @param ads   объявление
      * @param image новая картинка
-     * @return Объявление с обнавленной картинкой
+     * @return Объявление с обновленной картинкой
      */
     Ads updateAdsImage(Ads ads, Image image);
 }
