@@ -8,15 +8,13 @@ import ru.skypro.homework.entity.User;
 public interface AuthService {
 
     /**
-     * @param userName Логин(email)
+     * @param username Логин (email)
      * @param password Пароль
-     * @return Возвращает true если вход выполнен успешно, иначе false.
      */
-    boolean login(String userName, String password);
+    void login(String username, String password);
 
     /**
      * @param user Объект пользователя
-     * @return Возвращает true если такого пользователя ещё не существует и регистрация прошла успешно, иначе false.
      */
-    boolean register(User user);
+    void register(User user);
 }

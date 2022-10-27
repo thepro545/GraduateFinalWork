@@ -27,6 +27,6 @@ public class Ads {
 
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private Images image;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Image image;
 }
