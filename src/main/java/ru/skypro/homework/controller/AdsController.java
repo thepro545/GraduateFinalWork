@@ -48,6 +48,7 @@ public class AdsController {
     }
 
     @SneakyThrows
+    @ExceptionHandler
     @Operation(summary = "addAds", description = "addAds")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
